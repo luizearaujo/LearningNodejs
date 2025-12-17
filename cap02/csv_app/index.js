@@ -1,10 +1,55 @@
 import { writeFileSync } from "fs";
+import { existsSync } from "fs";
+import { createInterface } from "readline";
 
-const content = "Test content";
-
-try {
-    writeFileSync("./test.txt", content);
-    console.log("Success!");
-} catch (err) {
-    console.error(err);
+class Person {
+    constructor(name = "", number = "", email = "") {
+        this.name = name;
+        this.number = number;
+        this.email = email;
+    }
+    
+    saveToCSV() {
+        const content = `${this.name},${this.number},${this.email}\n`;
+        try {
+            if (!existsSync("./contacts.csv")) {
+                const header = "Name,Number,Email\n";
+                writeFileSync("./contacts.csv", header);
+            }
+            appendFileSync("./contacts.csv",content);
+            console.log(`${this.name} saved!`);
+        } catch (err) {
+            console.error(err);
+        }
+    }
 }
+
+const readline = createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+const readLineAsync = (message) =>
+    new Promise((resolve) => readline.question(message, resolve));
+
+const startApp = async () => {
+    let shouldContinue = true;
+    while (shouldContinue) {
+        const name = await readLineAsync("Contact Name: ");
+        const number = await readLineAsync("Contact Number: ");
+        const email = await readLineAsync("Contact Email: ");
+
+        const person = new Person(name, number, email);
+        person.saveToCSV();
+
+        const response = await readLineAsync("Continue? [y to continue]: ");
+        shouldContinue = response.toLowerCase() === "y";
+    }
+    readline.close();
+}
+
+
+
+
+
+startApp()
