@@ -1,0 +1,20 @@
+{
+  "name": "csv_app",
+  "version": "1.0.0",
+  "description": "An app to write contact information to a csv file",
+  "homepage": "https://github.com/luizearaujo/LearningNodejs#readme",
+  "bugs": {
+    "url": "https://github.com/luizearaujo/LearningNodejs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizearaujo/LearningNodejs.git"
+  },
+  "license": "ISC",
+  "author": "Luiz Dario",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
