@@ -13,7 +13,8 @@ const csvWriter = createObjectCsvWriter({
     header: [
         {id : 'name', title: 'Name'},
         {id : 'number', title: 'Number'},
-        {id : 'email', title: 'Email'}
+        {id : 'email', title: 'Email'},
+        {id : 'createdAt', tittle: 'Created_At'}
     ],
 });
 
@@ -22,12 +23,13 @@ class Person {
         this.name = name;
         this.number = number;
         this.email = email;
+        this.createdAt = new Date().toISOString();
     }
     
     async saveToCSV() {
         try {
-            const {name, number, email} = this;
-            await csvWriter.writeRecords([{name, number, email}]);
+            const {name, number, email, createdAt} = this;
+            await csvWriter.writeRecords([{name, number, email, createdAt}]);
             console.log(`${name} saved!`);
         } catch (err) {
             console.error(err);
