@@ -1,18 +1,19 @@
 import { createObjectCsvWriter } from "csv-writer";
 import prompt from "prompt";
+import fs from 'fs';
 
 prompt.start();
 prompt.message = "";
 
-const csvFileName = "./contacts-ext.csv";
+const csvFileName = './contacts-ext.csv';
 
 const csvWriter = createObjectCsvWriter({
     path: csvFileName,
-    append: true,
+    append: fs.existsSync(csvFileName),
     header: [
-        {id : "name", title: "Name"},
-        {id : "number", title: "Number"},
-        {id : "email", title: "Email"}
+        {id : 'name', title: 'Name'},
+        {id : 'number', title: 'Number'},
+        {id : 'email', title: 'Email'}
     ],
 });
 
