@@ -1,12 +1,20 @@
+import { createObjectCsvWriter } from "csv-writer";
 import prompt from "prompt";
+
 prompt.start();
 prompt.message = "";
 
-import { writeFileSync } from "fs";
-import { appendFileSync } from "fs";
-import { existsSync } from "fs";
-
 const csvFileName = "./contacts-ext.csv";
+
+const csvWriter = createObjectCsvWriter({
+    path: csvFileName,
+    append: true,
+    header: [
+        {id : "name", title: "Name"},
+        {id : "number", title: "Number"},
+        {id : "email", title: "Email"}
+    ],
+});
 
 class Person {
     constructor(name = "", number = "", email = "") {
@@ -15,15 +23,11 @@ class Person {
         this.email = email;
     }
     
-    saveToCSV() {
-        const content = `${this.name},${this.number},${this.email}\n`;
+    async saveToCSV() {
         try {
-            if (!existsSync(csvFileName)) {
-                const header = "Name,Number,Email\n";
-                writeFileSync(csvFileName, header);
-            }
-            appendFileSync(csvFileName,content);
-            console.log(`${this.name} saved!`);
+            const {name, number, email} = this;
+            await csvWriter.writeRecords([{name, number, email}]);
+            console.log(`${name} saved!`);
         } catch (err) {
             console.error(err);
         }
@@ -46,9 +50,6 @@ const startApp = async () => {
     });
     if (again.toLowerCase() === "y") await startApp();
 }
-
-
-
 
 
 startApp()
