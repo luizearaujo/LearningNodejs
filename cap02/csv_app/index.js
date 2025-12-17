@@ -1,4 +1,5 @@
 import { writeFileSync } from "fs";
+import { appendFileSync } from "fs";
 import { existsSync } from "fs";
 import { createInterface } from "readline";
 
