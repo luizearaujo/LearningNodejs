@@ -1,7 +1,12 @@
+import prompt from "prompt";
+prompt.start();
+prompt.message = "";
+
 import { writeFileSync } from "fs";
 import { appendFileSync } from "fs";
 import { existsSync } from "fs";
-import { createInterface } from "readline";
+
+const csvFileName = "./contacts-ext.csv";
 
 class Person {
     constructor(name = "", number = "", email = "") {
@@ -13,11 +18,11 @@ class Person {
     saveToCSV() {
         const content = `${this.name},${this.number},${this.email}\n`;
         try {
-            if (!existsSync("./contacts.csv")) {
+            if (!existsSync(csvFileName)) {
                 const header = "Name,Number,Email\n";
-                writeFileSync("./contacts.csv", header);
+                writeFileSync(csvFileName, header);
             }
-            appendFileSync("./contacts.csv",content);
+            appendFileSync(csvFileName,content);
             console.log(`${this.name} saved!`);
         } catch (err) {
             console.error(err);
@@ -25,28 +30,21 @@ class Person {
     }
 }
 
-const readline = createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-const readLineAsync = (message) =>
-    new Promise((resolve) => readline.question(message, resolve));
-
 const startApp = async () => {
-    let shouldContinue = true;
-    while (shouldContinue) {
-        const name = await readLineAsync("Contact Name: ");
-        const number = await readLineAsync("Contact Number: ");
-        const email = await readLineAsync("Contact Email: ");
+    const querstions = [
+        {name: "name", description: "Contact Name: "},
+        {name: "number", description: "Contact Number: "},
+        {name: "email", description: "Contact Email: "}
+    ];
+    const response = await prompt.get(querstions);
+    const person = new Person(response.name, response.number, response.email);
+    await person.saveToCSV();
 
-        const person = new Person(name, number, email);
-        person.saveToCSV();
-
-        const response = await readLineAsync("Continue? [y to continue]: ");
-        shouldContinue = response.toLowerCase() === "y";
-    }
-    readline.close();
+    const { again } = await prompt.get({
+        name: "again",
+        description: "Continue? [y to continue]: "
+    });
+    if (again.toLowerCase() === "y") await startApp();
 }
 
 
