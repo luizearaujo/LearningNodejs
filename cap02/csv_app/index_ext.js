@@ -41,7 +41,7 @@ const startApp = async () => {
     const querstions = [
         {name: "name", description: "Contact Name: "},
         {name: "number", description: "Contact Number: "},
-        {name: "email", description: "Contact Email: "}
+        {name: "email", description: "Contact Email: ", validator: '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$', warning: 'Must be a valid email address' }
     ];
     const response = await prompt.get(querstions);
     const person = new Person(response.name, response.number, response.email);
