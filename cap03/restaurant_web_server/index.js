@@ -3,6 +3,7 @@ import Fastify from "fastify";
 import fastifyView from "@fastify/view";
 import operationHours from "./data/operationHours.js";
 import menuItems from "./data/menuItem.js";
+import days from "./data/days.js";
 
 const app = Fastify();
 const port = 3000;
@@ -22,15 +23,6 @@ app.get("/menu", (request, reply) => {
 });
 
 app.get("/hours", (request, reply) => {
-    const days = [
-        "monday", 
-        "tuesday",
-        "wednesday",
-        "thursday",
-        "friday",
-        "saturday",
-        "sunday"
-    ];
     reply.view("views/hours.ejs", { operationHours, days });
 });
 
