@@ -21,8 +21,17 @@ app.get("/menu", (request, reply) => {
     reply.view("views/menu.ejs", { menuItems });
 });
 
-app.get("/hours", async (request, reply) => {
-    return operationHours;
+app.get("/hours", (request, reply) => {
+    const days = [
+        "monday", 
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday"
+    ];
+    reply.view("views/hours.ejs", { operationHours, days });
 });
 
 await app.listen({ port }, (err, address) => {
