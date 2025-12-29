@@ -1,0 +1,24 @@
+{
+  "name": "restaurant_web_server",
+  "version": "1.0.0",
+  "description": "An web application for a local restaurant",
+  "keywords": [
+    "node",
+    "fastify"
+  ],
+  "homepage": "https://github.com/luizearaujo/LearningNodejs#readme",
+  "bugs": {
+    "url": "https://github.com/luizearaujo/LearningNodejs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizearaujo/LearningNodejs.git"
+  },
+  "license": "ISC",
+  "author": "Luiz Dario",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
